@@ -3,8 +3,8 @@ package com.example.mytodo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
-import androidx.lifecycle.MutableLiveData
+import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import com.example.mytodo.databinding.ActivityMainBinding
 import com.example.mytodo.ui.donelist.DoneListFragment
 import com.example.mytodo.ui.setting.SettingFragment
@@ -16,17 +16,25 @@ class MainActivity : AppCompatActivity(){
     private lateinit var todoListFragment: TodoListFragment
     private lateinit var doneListFragment: DoneListFragment
     private lateinit var settingFragment: SettingFragment
+    private lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         initMainBinding()
+        initToolbar()
         initBottomNav()
     }
 
     private fun initMainBinding() {
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
+    }
+
+
+    private fun initToolbar() {
+        toolbar = mBinding.toolbar
+        setSupportActionBar(toolbar)
     }
 
     private fun initBottomNav() {
