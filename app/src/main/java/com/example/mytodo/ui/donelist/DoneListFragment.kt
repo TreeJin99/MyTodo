@@ -31,6 +31,6 @@ class DoneListFragment: Fragment() {
     companion object{
         const val TAG: String = "로그"
 
-        fun DoneListInstance(): DoneListFragment = DoneListFragment()
+        fun doneListInstance(): DoneListFragment = DoneListFragment()
     }
 }

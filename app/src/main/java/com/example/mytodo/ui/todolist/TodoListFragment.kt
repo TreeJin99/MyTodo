@@ -10,22 +10,27 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mytodo.R
 import com.example.mytodo.databinding.FragmentTodoListBinding
 import com.example.mytodo.dto.TodoModel
 import com.example.mytodo.viewmodel.TodoViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
 
 class TodoListFragment: Fragment() {
     private lateinit var todoBinding: FragmentTodoListBinding
     private lateinit var todoListAdapter: TodoListAdapter
-    private val todoViewModel: TodoViewModel by viewModels()
+    private lateinit var todoViewModel: TodoViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //initRecyclerView()
 
     }
 
@@ -42,6 +47,9 @@ class TodoListFragment: Fragment() {
         todoBinding = FragmentTodoListBinding.inflate(inflater, container, false)
 
         initButton()
+        initViewModel()
+        initRecyclerView()
+
         // 프레그먼트와 레이아웃 연결된다.
         return todoBinding.root
     }
@@ -64,21 +72,33 @@ class TodoListFragment: Fragment() {
         todoBinding.addFab.setOnClickListener {
             Toast.makeText(activity, "테스트", Toast.LENGTH_LONG).show()
             val dateAndTime: LocalDateTime = LocalDateTime.now()
-            todoViewModel.createTodo(TodoModel("테스트", dateAndTime.toString(), false))
+
+            CoroutineScope(Dispatchers.IO).launch {
+                todoViewModel.createTodo(TodoModel("테스트", dateAndTime.toString(), false))
+            }
         }
+    }
+
+    private fun initViewModel(){
+        todoViewModel = ViewModelProvider(this)[TodoViewModel::class.java]
     }
 
     private fun initRecyclerView(){
         todoListAdapter = TodoListAdapter()
+
         todoBinding.todoListRV.apply {
-            setHasFixedSize(true)
             adapter = todoListAdapter
+            setHasFixedSize(true)
+        }
+
+        todoViewModel.readAllTodo.observe(viewLifecycleOwner){
+            todoListAdapter.update(it)
         }
     }
 
     companion object{
         const val TAG: String = "로그"
 
-        fun TodoListPageInstance(): TodoListFragment = TodoListFragment()
+        fun todoListPageInstance(): TodoListFragment = TodoListFragment()
     }
 }

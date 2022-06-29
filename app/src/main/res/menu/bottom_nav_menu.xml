@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menu_todoList"
-        android:icon="@drawable/ic_baseline_list_24"
-        android:title="@string/todo_list"/>
-    <item
         android:id="@+id/menu_doneList"
         android:icon="@drawable/ic_baseline_playlist_add_check_24"
         android:title="@string/done_list"/>
+    <item
+        android:id="@+id/menu_todoList"
+        android:icon="@drawable/ic_baseline_list_24"
+        android:title="@string/todo_list"/>
     <item
         android:id="@+id/menu_setting"
         android:icon="@drawable/ic_baseline_settings_24"

@@ -4,13 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.todolist.TodoListFragment"
-    android:background="@color/teal_200">
+    tools:context=".ui.todolist.TodoListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/todoList_RV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        tools:listitem="@layout/todoitems"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

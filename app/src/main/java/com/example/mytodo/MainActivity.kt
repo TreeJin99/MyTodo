@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.FragmentTransaction
 import com.example.mytodo.databinding.ActivityMainBinding
 import com.example.mytodo.ui.donelist.DoneListFragment
 import com.example.mytodo.ui.setting.SettingFragment
@@ -38,21 +39,21 @@ class MainActivity : AppCompatActivity(){
     }
 
     private fun initBottomNav() {
-         val onBottomNavigationSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        val onBottomNavigationSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when(item.itemId){
                 R.id.menu_todoList ->{
                     Log.d(TAG, "Clicked TODOLIST")
-                    todoListFragment = TodoListFragment.TodoListPageInstance()
+                    todoListFragment = TodoListFragment.todoListPageInstance()
                     supportFragmentManager.beginTransaction().replace(R.id.fragmentFrame, todoListFragment).commit()
                 }
                 R.id.menu_doneList ->{
                     Log.d(TAG, "Clicked DoneList")
-                    doneListFragment = DoneListFragment.DoneListInstance()
+                    doneListFragment = DoneListFragment.doneListInstance()
                     supportFragmentManager.beginTransaction().replace(R.id.fragmentFrame, doneListFragment).commit()
                 }
                 R.id.menu_setting ->{
                     Log.d(TAG, "Clicked Setting")
-                    settingFragment = SettingFragment.SettingInstance()
+                    settingFragment = SettingFragment.settingInstance()
                     supportFragmentManager.beginTransaction().replace(R.id.fragmentFrame, settingFragment).commit()
                 }
             }

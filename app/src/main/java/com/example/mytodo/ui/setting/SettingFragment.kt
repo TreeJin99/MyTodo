@@ -10,12 +10,6 @@ import androidx.fragment.app.Fragment
 import com.example.mytodo.R
 
 class SettingFragment: Fragment() {
-    companion object{
-        const val TAG: String = "로그"
-
-        fun SettingInstance(): SettingFragment = SettingFragment()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "SettingInstance - onCreate() 호출됨")
@@ -36,5 +30,11 @@ class SettingFragment: Fragment() {
 
         // 프레그먼트와 레이아웃 연결된다.
         return inflater.inflate(R.layout.fragment_setting, container, false)
+    }
+
+    companion object{
+        const val TAG: String = "로그"
+
+        fun settingInstance(): SettingFragment = SettingFragment()
     }
 }
