@@ -7,4 +7,11 @@
     <string name="setting">Setting</string>
     <string name="search">Search</string>
     <string name="add_todo">Add Todo</string>
+    <string name="event_title">Event Title</string>
+    <string name="until">Until</string>
+    <string name="detail">Detail</string>
+    <string name="end_date">End Date</string>
+    <string name="clock_image">Clock Image</string>
+    <string name="calendar">calendar</string>
+    <string name="important">Important</string>
 </resources>

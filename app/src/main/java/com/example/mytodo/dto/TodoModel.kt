@@ -7,6 +7,8 @@ import androidx.room.PrimaryKey
 data class TodoModel(
     val title: String,
     val timestamp: String,
+    val endDate: String,
+    var isImportant: Boolean,
     var isChecked: Boolean
 ){
     @PrimaryKey(autoGenerate = true)

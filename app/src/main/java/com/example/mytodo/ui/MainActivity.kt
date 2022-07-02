@@ -1,11 +1,10 @@
-package com.example.mytodo
+package com.example.mytodo.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.FragmentTransaction
+import com.example.mytodo.R
 import com.example.mytodo.databinding.ActivityMainBinding
 import com.example.mytodo.ui.donelist.DoneListFragment
 import com.example.mytodo.ui.setting.SettingFragment
