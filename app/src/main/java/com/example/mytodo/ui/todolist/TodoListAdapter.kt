@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mytodo.databinding.TodoitemsBinding
 import com.example.mytodo.dto.TodoModel
 
-class TodoListAdapter(): RecyclerView.Adapter<TodoListAdapter.TodoViewHolder>() {
+class TodoListAdapter(private val deleteItem: (TodoModel) -> Unit): RecyclerView.Adapter<TodoListAdapter.TodoViewHolder>() {
     var todoItems: List<TodoModel> = mutableListOf()
 
     inner class TodoViewHolder(private val todoItemBinding: TodoitemsBinding): RecyclerView.ViewHolder(todoItemBinding.root){
@@ -17,6 +17,10 @@ class TodoListAdapter(): RecyclerView.Adapter<TodoListAdapter.TodoViewHolder>() 
                 todoTitle.text = todoModel.title
                 todoDate.text = todoModel.timestamp
                 isChecked.isChecked = todoModel.isChecked
+
+                deleteButton.setOnClickListener {
+                    deleteItem(todoModel)
+                }
             }
         }
     }

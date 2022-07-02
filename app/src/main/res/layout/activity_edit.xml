@@ -79,6 +79,7 @@
                 app:layout_constraintTop_toBottomOf="@id/untilText" />
 
             <Button
+                android:id="@+id/todoDatePicker"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginStart="15dp"
@@ -130,7 +131,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addTodo"
+        android:id="@+id/addTodoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"

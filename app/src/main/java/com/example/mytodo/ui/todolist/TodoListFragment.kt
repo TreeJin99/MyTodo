@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-class TodoListFragment: Fragment() {
+class TodoListFragment : Fragment() {
     private lateinit var todoBinding: FragmentTodoListBinding
     private lateinit var todoListAdapter: TodoListAdapter
     private lateinit var todoViewModel: TodoViewModel
@@ -69,34 +69,43 @@ class TodoListFragment: Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun initButton() {
-        todoBinding.addFab.setOnClickListener {
-            Toast.makeText(activity, "테스트", Toast.LENGTH_LONG).show()
-            val dateAndTime: LocalDateTime = LocalDateTime.now()
-
-            CoroutineScope(Dispatchers.IO).launch {
-                todoViewModel.createTodo(TodoModel("테스트", dateAndTime.toString(), false))
-            }
-        }
     }
 
-    private fun initViewModel(){
+    private fun initViewModel() {
         todoViewModel = ViewModelProvider(this)[TodoViewModel::class.java]
     }
 
-    private fun initRecyclerView(){
-        todoListAdapter = TodoListAdapter()
+    private fun initRecyclerView() {
+        todoListAdapter = TodoListAdapter { todoModel -> deleteTodo(todoModel) }
 
         todoBinding.todoListRV.apply {
             adapter = todoListAdapter
             setHasFixedSize(true)
         }
 
-        todoViewModel.readAllTodo.observe(viewLifecycleOwner){
+        todoViewModel.readAllTodo.observe(viewLifecycleOwner) {
             todoListAdapter.update(it)
         }
     }
 
-    companion object{
+    private fun addTodo(todoModel: TodoModel) {
+        todoBinding.addFab.setOnClickListener {
+            Toast.makeText(activity, "테스트", Toast.LENGTH_LONG).show()
+        }
+
+        CoroutineScope(Dispatchers.IO).launch {
+            //todoViewModel.createTodo(TodoModel("테스트", dateAndTime.toString(), false))
+        }
+    }
+
+    private fun deleteTodo(todoModel: TodoModel) {
+        CoroutineScope(Dispatchers.IO).launch {
+            todoViewModel.deleteTodo(todoModel)
+        }
+    }
+
+
+    companion object {
         const val TAG: String = "로그"
 
         fun todoListPageInstance(): TodoListFragment = TodoListFragment()
