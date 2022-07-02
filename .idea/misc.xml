@@ -6,12 +6,19 @@
         <entry key="..\:/Users/mokuj/OneDrive/WorkSpace/Android Studio/MyTodo/app/src/main/res/drawable/edge_black.xml" value="0.32" />
         <entry key="..\:/Users/mokuj/OneDrive/WorkSpace/Android Studio/MyTodo/app/src/main/res/drawable/edge_empty.xml" value="0.32" />
         <entry key="..\:/Users/mokuj/OneDrive/WorkSpace/Android Studio/MyTodo/app/src/main/res/drawable/ic_baseline_star_24.xml" value="0.32" />
+        <entry key="..\:/Users/mokuj/OneDrive/WorkSpace/Android Studio/MyTodo/app/src/main/res/drawable/switch_custom.xml" value="0.273" />
+        <entry key="..\:/Users/mokuj/OneDrive/WorkSpace/Android Studio/MyTodo/app/src/main/res/drawable/switch_thumb.xml" value="0.273" />
+        <entry key="..\:/Users/mokuj/OneDrive/WorkSpace/Android Studio/MyTodo/app/src/main/res/drawable/switch_thumb_selector.xml" value="0.273" />
+        <entry key="..\:/Users/mokuj/OneDrive/WorkSpace/Android Studio/MyTodo/app/src/main/res/drawable/switch_track_off.xml" value="0.273" />
+        <entry key="..\:/Users/mokuj/OneDrive/WorkSpace/Android Studio/MyTodo/app/src/main/res/drawable/switch_track_on.xml" value="0.273" />
+        <entry key="..\:/Users/mokuj/OneDrive/WorkSpace/Android Studio/MyTodo/app/src/main/res/drawable/switch_track_selector.xml" value="0.273" />
+        <entry key="..\:/Users/mokuj/OneDrive/WorkSpace/Android Studio/MyTodo/app/src/main/res/layout/activity_edit.xml" value="0.264" />
         <entry key="..\:/Users/mokuj/OneDrive/WorkSpace/Android Studio/MyTodo/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/mokuj/OneDrive/WorkSpace/Android Studio/MyTodo/app/src/main/res/layout/addtodo.xml" value="0.3609375" />
         <entry key="..\:/Users/mokuj/OneDrive/WorkSpace/Android Studio/MyTodo/app/src/main/res/layout/fragment_done_list.xml" value="0.3582427536231884" />
         <entry key="..\:/Users/mokuj/OneDrive/WorkSpace/Android Studio/MyTodo/app/src/main/res/layout/fragment_setting.xml" value="0.34739583333333335" />
         <entry key="..\:/Users/mokuj/OneDrive/WorkSpace/Android Studio/MyTodo/app/src/main/res/layout/fragment_todo_list.xml" value="0.176" />
-        <entry key="..\:/Users/mokuj/OneDrive/WorkSpace/Android Studio/MyTodo/app/src/main/res/layout/todoitems.xml" value="0.5494791666666666" />
+        <entry key="..\:/Users/mokuj/OneDrive/WorkSpace/Android Studio/MyTodo/app/src/main/res/layout/todoitems.xml" value="0.264" />
         <entry key="..\:/Users/mokuj/OneDrive/WorkSpace/Android Studio/MyTodo/app/src/main/res/menu-v26/menu_search.xml" value="0.18489583333333334" />
         <entry key="..\:/Users/mokuj/OneDrive/WorkSpace/Android Studio/MyTodo/app/src/main/res/menu/bottom_nav_menu.xml" value="0.3609375" />
         <entry key="..\:/Users/mokuj/OneDrive/WorkSpace/Android Studio/MyTodo/app/src/main/res/menu/menu.xml" value="0.3619791666666667" />

@@ -1,27 +1,32 @@
 package com.example.mytodo.ui
 
-import android.os.Build
 import android.os.Bundle
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mytodo.databinding.ActivityEditBinding
 import android.app.DatePickerDialog
-import com.google.android.material.datepicker.MaterialDatePicker
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import android.util.Log
+import androidx.lifecycle.ViewModelProvider
+import com.example.mytodo.dto.TodoModel
+import com.example.mytodo.viewmodel.TodoViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.text.DateFormat
 import java.util.*
 
 class EditActivity : AppCompatActivity() {
     private lateinit var editBind: ActivityEditBinding
     private lateinit var currentType: String
+    private lateinit var todoViewModel: TodoViewModel
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         editBinding()
+        initViewModel()
         currentType()
         addTodo()
+        getEndDate()    // DatePicker 활성화
     }
 
     private fun editBinding() {
@@ -29,8 +34,11 @@ class EditActivity : AppCompatActivity() {
         setContentView(editBind.root)
     }
 
+    private fun initViewModel() {
+        todoViewModel = ViewModelProvider(this)[TodoViewModel::class.java]
+    }
+
     // 현재 타입 받아오기
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun currentType() {
         currentType = intent.getStringExtra("TYPE").toString()
         when (currentType) {
@@ -38,53 +46,48 @@ class EditActivity : AppCompatActivity() {
                 addTodo()
             }
             "EDIT" -> { // 수정
-                editTodo()
             }
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun addTodo() {
         editBind.addTodoButton.setOnClickListener {
-            val todoTitle: String = editBind.addTodoTitle.toString()
-            val todoTimeStamp: String = getCurrentTime()
+            val todoTitle: String = editBind.addTodoEditText.text.toString()
+            val endDate: String = editBind.todoDatePicker.toString()
+            val isImportant: Boolean = editBind.importantSwitch.isChecked
+            val timeStamp: String = getCurrentTime()
 
-
+            Log.d("태그", todoTitle)
+            CoroutineScope(Dispatchers.IO).launch {
+                todoViewModel.createTodo(TodoModel(todoTitle, endDate, isImportant, false, timeStamp))
+            }
         }
-
     }
 
     /**
      *
     val title: String,
-    val timestamp: String,
     var endDate: String,
     var isImportant: Boolean,
     var isChecked: Boolean
      *
      */
 
-    private fun editTodo() {
-
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun getCurrentTime(): String{
-        val currentTime = LocalDate.now()
-        val timeFormat = DateTimeFormatter.ofPattern("yyy년 MM월 dd일 HH시 mm분")
-
-        return currentTime.format(timeFormat)
-    }
-
-    private fun getEndDate(){
+    private fun getEndDate() {
         editBind.todoDatePicker.setOnClickListener {
-            val builder = MaterialDatePicker.Builder.datePicker()
-                .setTitleText("When is your DeadLine?")
-                .setInputMode(MaterialDatePicker.INPUT_MODE_TEXT)
-                .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
-            val datePicker = builder.build()
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
 
+            val dateSetListener =
+                DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                    val endDate = "${year}년 ${month + 1}월 ${dayOfMonth}일"
+                    editBind.todoDatePicker.text = endDate
+                }
+            DatePickerDialog(this, dateSetListener, year, month, day).show()
         }
     }
 
+    private fun getCurrentTime() = DateFormat.getDateTimeInstance().format(System.currentTimeMillis()).toString()
 }

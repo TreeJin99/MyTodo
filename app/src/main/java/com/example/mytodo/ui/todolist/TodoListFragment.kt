@@ -1,27 +1,23 @@
 package com.example.mytodo.ui.todolist
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mytodo.R
 import com.example.mytodo.databinding.FragmentTodoListBinding
 import com.example.mytodo.dto.TodoModel
+import com.example.mytodo.ui.EditActivity
 import com.example.mytodo.viewmodel.TodoViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.time.LocalDate
-import java.time.LocalDateTime
 
 class TodoListFragment : Fragment() {
     private lateinit var todoBinding: FragmentTodoListBinding
@@ -30,10 +26,7 @@ class TodoListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
     }
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
     }
@@ -49,6 +42,7 @@ class TodoListFragment : Fragment() {
         initButton()
         initViewModel()
         initRecyclerView()
+        addTodo()
 
         // 프레그먼트와 레이아웃 연결된다.
         return todoBinding.root
@@ -88,15 +82,22 @@ class TodoListFragment : Fragment() {
         }
     }
 
-    private fun addTodo(todoModel: TodoModel) {
+    private fun addTodo() {
         todoBinding.addFab.setOnClickListener {
             Toast.makeText(activity, "테스트", Toast.LENGTH_LONG).show()
+
+            val editIntent = Intent(activity, EditActivity::class.java).apply {
+                putExtra("TYPE", "ADD")
+            }
+            startActivity(editIntent)
         }
 
         CoroutineScope(Dispatchers.IO).launch {
             //todoViewModel.createTodo(TodoModel("테스트", dateAndTime.toString(), false))
         }
     }
+
+
 
     private fun deleteTodo(todoModel: TodoModel) {
         CoroutineScope(Dispatchers.IO).launch {

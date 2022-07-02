@@ -8,25 +8,29 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mytodo.databinding.TodoitemsBinding
 import com.example.mytodo.dto.TodoModel
 
-class TodoListAdapter(private val deleteItem: (TodoModel) -> Unit): RecyclerView.Adapter<TodoListAdapter.TodoViewHolder>() {
+class TodoListAdapter(private val deleteItem: (TodoModel) -> Unit) :
+    RecyclerView.Adapter<TodoListAdapter.TodoViewHolder>() {
     var todoItems: List<TodoModel> = mutableListOf()
 
-    inner class TodoViewHolder(private val todoItemBinding: TodoitemsBinding): RecyclerView.ViewHolder(todoItemBinding.root){
-        fun bind(todoModel: TodoModel){
-            with(todoItemBinding){
+    inner class TodoViewHolder(private val todoItemBinding: TodoitemsBinding) :
+        RecyclerView.ViewHolder(todoItemBinding.root) {
+        fun bind(todoModel: TodoModel) {
+            with(todoItemBinding) {
                 todoTitle.text = todoModel.title
-                todoDate.text = todoModel.timestamp
                 isChecked.isChecked = todoModel.isChecked
 
                 deleteButton.setOnClickListener {
                     deleteItem(todoModel)
                 }
             }
+
+
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
-        val todoItemBinding: TodoitemsBinding = TodoitemsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val todoItemBinding: TodoitemsBinding =
+            TodoitemsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         return TodoViewHolder(todoItemBinding)
     }
@@ -37,7 +41,7 @@ class TodoListAdapter(private val deleteItem: (TodoModel) -> Unit): RecyclerView
 
     override fun getItemCount(): Int = todoItems.size
 
-    fun update(newItem: List<TodoModel>){
+    fun update(newItem: List<TodoModel>) {
         todoItems = newItem
         notifyDataSetChanged()
     }

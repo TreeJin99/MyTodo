@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="500dp"
-    android:layout_margin="7dp"
-    android:background="@drawable/edge_black">
+    android:background="@drawable/edge_black"
+    android:padding="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topLayout"
@@ -80,10 +80,11 @@
 
             <Button
                 android:id="@+id/todoDatePicker"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="45dp"
                 android:background="@drawable/edge_empty"
+                android:gravity="center_vertical"
                 android:textSize="7pt"
                 app:layout_constraintBottom_toBottomOf="@id/calendarImage"
                 app:layout_constraintStart_toEndOf="@id/calendarImage"
@@ -117,14 +118,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+            <Switch
+                android:id="@+id/importantSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/ic_baseline_star_border_24"
-                android:contentDescription="TODO"
+                android:thumb="@drawable/switch_thumb_selector"
+                android:track="@drawable/switch_track_selector"
                 app:layout_constraintStart_toStartOf="@id/importantText"
-                app:layout_constraintTop_toBottomOf="@id/importantText" />
+                app:layout_constraintTop_toBottomOf="@id/importantText"
+                tools:ignore="UseSwitchCompatOrMaterialXml,UsingOnClickInXml" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -140,7 +143,6 @@
         android:focusable="true"
         android:src="@drawable/ic_baseline_add_24"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
