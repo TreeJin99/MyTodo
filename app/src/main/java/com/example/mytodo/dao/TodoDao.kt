@@ -10,6 +10,9 @@ interface TodoDao {
     @Query("SELECT * FROM TodoModel WHERE title LIKE :todoTitle")
     fun searchTodo(todoTitle: String) : Flow<List<TodoModel>>
 
+    @Query("SELECT * FROM TodoModel WHERE id = (:id)")
+    fun selectOne(id:Long): Flow<List<TodoModel>>
+
     @Query("SELECT * FROM TodoModel ORDER BY timestamp")
     fun readAllTodo(): Flow<List<TodoModel>>
 

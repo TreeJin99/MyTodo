@@ -4,11 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import com.example.mytodo.R
 import com.example.mytodo.databinding.FragmentTodoListBinding
@@ -39,10 +41,10 @@ class TodoListFragment : Fragment() {
     ): View {
         todoBinding = FragmentTodoListBinding.inflate(inflater, container, false)
 
-        initButton()
         initViewModel()
         initRecyclerView()
         addTodo()
+        isItemChecked()
 
         // 프레그먼트와 레이아웃 연결된다.
         return todoBinding.root
@@ -61,12 +63,12 @@ class TodoListFragment : Fragment() {
         super.onDestroyView()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun initButton() {
-    }
-
     private fun initViewModel() {
         todoViewModel = ViewModelProvider(this)[TodoViewModel::class.java]
+
+        todoViewModel.readAllTodo.observe(viewLifecycleOwner) {
+            todoListAdapter.update(it)
+        }
     }
 
     private fun initRecyclerView() {
@@ -76,28 +78,31 @@ class TodoListFragment : Fragment() {
             adapter = todoListAdapter
             setHasFixedSize(true)
         }
-
-        todoViewModel.readAllTodo.observe(viewLifecycleOwner) {
-            todoListAdapter.update(it)
-        }
     }
 
     private fun addTodo() {
         todoBinding.addFab.setOnClickListener {
-            Toast.makeText(activity, "테스트", Toast.LENGTH_LONG).show()
+            //Toast.makeText(activity, "테스트", Toast.LENGTH_LONG).show()
 
-            val editIntent = Intent(activity, EditActivity::class.java).apply {
+            val intentToEdit = Intent(activity, EditActivity::class.java).apply {
                 putExtra("TYPE", "ADD")
             }
-            startActivity(editIntent)
-        }
-
-        CoroutineScope(Dispatchers.IO).launch {
-            //todoViewModel.createTodo(TodoModel("테스트", dateAndTime.toString(), false))
+            startActivity(intentToEdit)
+            //startActivityForResult(intentToEdit, ACTIVITY_REQUEST_CODE)
         }
     }
 
+    private fun isItemChecked() {
+        todoListAdapter.setItemCheckBoxClickListener(object: TodoListAdapter.ItemCheckBoxClickListener{
+            override fun onClick(view: View, position: Int, itemId: Long) {
+                CoroutineScope(Dispatchers.IO).launch {
+                    val todoItem: LiveData<List<TodoModel>> = todoViewModel.selectOne(itemId)
 
+                    Log.d("태그", todoViewModel.selectOne(itemId).toString())
+                }
+            }
+        })
+    }
 
     private fun deleteTodo(todoModel: TodoModel) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -108,6 +113,7 @@ class TodoListFragment : Fragment() {
 
     companion object {
         const val TAG: String = "로그"
+        const val ACTIVITY_REQUEST_CODE = 123
 
         fun todoListPageInstance(): TodoListFragment = TodoListFragment()
     }

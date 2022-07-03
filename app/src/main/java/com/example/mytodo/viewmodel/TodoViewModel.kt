@@ -10,6 +10,7 @@ import com.example.mytodo.repository.TodoRepository
 
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class TodoViewModel(application: Application): AndroidViewModel(application) {
@@ -18,6 +19,8 @@ class TodoViewModel(application: Application): AndroidViewModel(application) {
     val readAllTodo: LiveData<List<TodoModel>> = todoRepository.readAllTodo.asLiveData()
 
     fun searchTodo(todoTitle: String): LiveData<List<TodoModel>> = todoRepository.searchTodo(todoTitle).asLiveData()
+
+    fun selectOne(id:Long): LiveData<List<TodoModel>> = todoRepository.selectOne(id).asLiveData()
 
     fun createTodo(todoModel: TodoModel){
         viewModelScope.launch(Dispatchers.IO){

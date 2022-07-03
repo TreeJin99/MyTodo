@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.Flow
 class TodoRepository(private val todoDao: TodoDao) {
     fun searchTodo(todoTitle: String): Flow<List<TodoModel>> = todoDao.searchTodo(todoTitle)
 
+    fun selectOne(id:Long): Flow<List<TodoModel>> = todoDao.selectOne(id)
+
     val readAllTodo: Flow<List<TodoModel>> = todoDao.readAllTodo()
 
     suspend fun createTodo(todoModel: TodoModel) = todoDao.createTodo(todoModel)

@@ -4,9 +4,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mytodo.databinding.ActivityEditBinding
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.example.mytodo.dto.TodoModel
+import com.example.mytodo.ui.todolist.TodoListFragment
 import com.example.mytodo.viewmodel.TodoViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -53,25 +55,20 @@ class EditActivity : AppCompatActivity() {
     private fun addTodo() {
         editBind.addTodoButton.setOnClickListener {
             val todoTitle: String = editBind.addTodoEditText.text.toString()
-            val endDate: String = editBind.todoDatePicker.toString()
+            val endDate: String = editBind.todoDatePicker.text.toString()
             val isImportant: Boolean = editBind.importantSwitch.isChecked
             val timeStamp: String = getCurrentTime()
 
-            Log.d("태그", todoTitle)
             CoroutineScope(Dispatchers.IO).launch {
                 todoViewModel.createTodo(TodoModel(todoTitle, endDate, isImportant, false, timeStamp))
             }
+
+            val editIntent = Intent(this, TodoListFragment::class.java).apply {
+                putExtra("TYPE", "CLEAR")
+            }
+            finish()
         }
     }
-
-    /**
-     *
-    val title: String,
-    var endDate: String,
-    var isImportant: Boolean,
-    var isChecked: Boolean
-     *
-     */
 
     private fun getEndDate() {
         editBind.todoDatePicker.setOnClickListener {
