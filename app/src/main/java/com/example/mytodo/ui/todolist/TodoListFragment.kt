@@ -58,6 +58,7 @@ class TodoListFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        // TODO 아래 todoBinding 메모리 누수 방지를 위해 null로 바꿀 수 있는 위치를 찾아서 넣기
         // todoBinding = null
 
         super.onDestroyView()
