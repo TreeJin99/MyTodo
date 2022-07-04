@@ -10,11 +10,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mytodo.databinding.TodoitemsBinding
 import com.example.mytodo.dto.TodoModel
 
+/**
+ * TODO
+ * Adapter가 비대해서 크기 줄이기!
+ *
+ */
+
 class TodoListAdapter(private val deleteItem: (TodoModel) -> Unit) :
     RecyclerView.Adapter<TodoListAdapter.TodoViewHolder>() {
     private var todoItems: List<TodoModel> = mutableListOf()
     private lateinit var itemCheckBoxClickListener: ItemCheckBoxClickListener
-
+        
+    // TODO inner class를 nested Class로 변환하기
     inner class TodoViewHolder(private val todoItemBinding: TodoitemsBinding) :
         RecyclerView.ViewHolder(todoItemBinding.root) {
         fun bind(todoModel: TodoModel) {
