@@ -6,9 +6,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mytodo.R
 import com.example.mytodo.databinding.TodoitemsBinding
 import com.example.mytodo.dto.TodoModel
+import com.example.mytodo.ui.MainActivity
 
 /**
  * TODO
@@ -29,13 +32,15 @@ class TodoListAdapter(private val deleteItem: (TodoModel) -> Unit) :
                 todoTitle.text = todoModel.title
                 isChecked.isChecked = todoModel.isChecked
 
+                /*
                 if(isChecked.isChecked)
                     todoTitle.paintFlags = todoTitle.paintFlags or STRIKE_THRU_TEXT_FLAG
                 else
                     todoTitle.paintFlags = todoTitle.paintFlags and STRIKE_THRU_TEXT_FLAG.inv()
+                 */
 
                 isChecked.setOnClickListener {
-                    Log.d("태그", "is Work!! ${isChecked.isChecked}")
+                    itemCheckBoxClickListener.onClick(it, layoutPosition, todoItems.id)
                 }
                 deleteButton.setOnClickListener {
                     deleteItem(todoModel)
@@ -45,6 +50,8 @@ class TodoListAdapter(private val deleteItem: (TodoModel) -> Unit) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
+        //val todoDataBinding: TodoitemsBinding = DataBindingUtil.
+
         val todoItemBinding: TodoitemsBinding =
             TodoitemsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 

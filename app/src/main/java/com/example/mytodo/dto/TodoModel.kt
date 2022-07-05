@@ -11,7 +11,7 @@ data class TodoModel(
     var isImportant: Boolean,
     var isChecked: Boolean,
     val timeStamp: String
-): Serializable{
+) {
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
 }

@@ -79,6 +79,11 @@ class TodoListFragment : Fragment() {
             adapter = todoListAdapter
             setHasFixedSize(true)
         }
+        todoListAdapter.setItemCheckBoxClickListener(object: TodoListAdapter.ItemCheckBoxClickListener{
+            override fun onClick(view: View, position: Int, itemId: Long) {
+                Log.d("태그", "작동됨!~")
+            }
+        })
     }
 
     private fun addTodo() {
@@ -98,8 +103,6 @@ class TodoListFragment : Fragment() {
             override fun onClick(view: View, position: Int, itemId: Long) {
                 CoroutineScope(Dispatchers.IO).launch {
                     val todoItem: LiveData<List<TodoModel>> = todoViewModel.selectOne(itemId)
-
-                    Log.d("태그", todoViewModel.selectOne(itemId).toString())
                 }
             }
         })

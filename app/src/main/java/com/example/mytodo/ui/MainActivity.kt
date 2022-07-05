@@ -47,7 +47,6 @@ class MainActivity : AppCompatActivity(){
         setSupportActionBar(toolbar)
     }
 
-
     private fun initBottomNav() {
         /**
          * TODO
