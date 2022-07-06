@@ -58,9 +58,10 @@ class EditActivity : AppCompatActivity() {
             val endDate: String = editBind.todoDatePicker.text.toString()
             val isImportant: Boolean = editBind.importantSwitch.isChecked
             val timeStamp: String = getCurrentTime()
+            val todoItem = TodoModel(todoTitle, endDate, isImportant, false, timeStamp)
 
             CoroutineScope(Dispatchers.IO).launch {
-                todoViewModel.createTodo(TodoModel(todoTitle, endDate, isImportant, false, timeStamp))
+                todoViewModel.createTodo(todoItem)
             }
 
             val editIntent = Intent(this, TodoListFragment::class.java).apply {

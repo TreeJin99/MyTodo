@@ -1,6 +1,5 @@
 package com.example.mytodo.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.mytodo.dto.TodoModel
 import kotlinx.coroutines.flow.Flow
@@ -11,7 +10,7 @@ interface TodoDao {
     fun searchTodo(todoTitle: String) : Flow<List<TodoModel>>
 
     @Query("SELECT * FROM TodoModel WHERE id = (:id)")
-    fun selectOne(id:Long): Flow<List<TodoModel>>
+    fun selectOne(id:Long): TodoModel
 
     @Query("SELECT * FROM TodoModel ORDER BY timestamp")
     fun readAllTodo(): Flow<List<TodoModel>>

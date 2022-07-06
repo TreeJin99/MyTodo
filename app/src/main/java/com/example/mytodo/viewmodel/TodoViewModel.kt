@@ -1,6 +1,7 @@
 package com.example.mytodo.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
@@ -20,15 +21,13 @@ import kotlinx.coroutines.launch
  *
  */
 
-
 class TodoViewModel(application: Application): AndroidViewModel(application) {
     private val todoDao = TodoDatabase.getDatabase(application)!!.todoDao()
     private val todoRepository: TodoRepository = TodoRepository(todoDao)
+
     val readAllTodo: LiveData<List<TodoModel>> = todoRepository.readAllTodo.asLiveData()
 
     fun searchTodo(todoTitle: String): LiveData<List<TodoModel>> = todoRepository.searchTodo(todoTitle).asLiveData()
-
-    fun selectOne(id:Long): LiveData<List<TodoModel>> = todoRepository.selectOne(id).asLiveData()
 
     fun createTodo(todoModel: TodoModel){
         viewModelScope.launch(Dispatchers.IO){

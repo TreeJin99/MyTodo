@@ -1,14 +1,12 @@
 package com.example.mytodo.repository
 
-import androidx.room.*
+import android.util.Log
 import com.example.mytodo.dao.TodoDao
 import com.example.mytodo.dto.TodoModel
 import kotlinx.coroutines.flow.Flow
 
 class TodoRepository(private val todoDao: TodoDao) {
     fun searchTodo(todoTitle: String): Flow<List<TodoModel>> = todoDao.searchTodo(todoTitle)
-
-    fun selectOne(id:Long): Flow<List<TodoModel>> = todoDao.selectOne(id)
 
     val readAllTodo: Flow<List<TodoModel>> = todoDao.readAllTodo()
 

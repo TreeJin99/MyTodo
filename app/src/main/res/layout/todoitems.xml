@@ -4,12 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-            name="todoItems"
-            type="com.example.mytodo.dto.TodoModel" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="75dp"
@@ -43,7 +37,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/isImportantButton"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@{todoItems.title}"
             tools:text="Todo List Check!" />
 
         <TextView
@@ -65,7 +58,6 @@
             android:textSize="6pt"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/untilText"
-            android:text="@{todoItems.endDate}"
             tools:text="2022년 06월 29일 00:00:00" />
 
         <Button
@@ -75,11 +67,11 @@
             android:layout_marginEnd="15dp"
             android:background="@drawable/ic_baseline_delete_24"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/isChecked"
+            app:layout_constraintEnd_toStartOf="@id/todoCheckBox"
             app:layout_constraintTop_toTopOf="parent" />
 
         <CheckBox
-            android:id="@+id/isChecked"
+            android:id="@+id/todoCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
