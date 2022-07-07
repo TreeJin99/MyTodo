@@ -18,7 +18,6 @@ import com.example.mytodo.viewmodel.TodoViewModel
 class TodoListFragment : Fragment() {
     //private lateinit var todoBinding: FragmentTodoListBinding
     private var todoBinding: FragmentTodoListBinding? = null
-
     private lateinit var todoListAdapter: TodoListAdapter
     private lateinit var todoViewModel: TodoViewModel
 
@@ -32,7 +31,6 @@ class TodoListFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        Log.d("태그", "생성!")
         todoBinding = FragmentTodoListBinding.inflate(inflater, container, false)
 
         initViewModel()
@@ -52,20 +50,20 @@ class TodoListFragment : Fragment() {
         super.onDestroyView()
     }
 
+    private fun initViewModel() {
+        todoViewModel = ViewModelProvider(this)[TodoViewModel::class.java]
+    }
+
     private fun initRecyclerView() {
         todoListAdapter = TodoListAdapter(todoViewModel)
+
+        todoViewModel.readAllTodo.observe(viewLifecycleOwner) {
+            todoListAdapter.update(it)
+        }
 
         todoBinding!!.todoListRV.apply {
             adapter = todoListAdapter
             setHasFixedSize(true)
-        }
-    }
-
-    private fun initViewModel() {
-        todoViewModel = ViewModelProvider(this)[TodoViewModel::class.java]
-
-        todoViewModel.readAllTodo.observe(viewLifecycleOwner) {
-            todoListAdapter.update(it)
         }
     }
 

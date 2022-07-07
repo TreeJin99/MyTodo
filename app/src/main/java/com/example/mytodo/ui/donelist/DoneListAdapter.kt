@@ -1,9 +1,9 @@
-package com.example.mytodo.ui.todolist
+package com.example.mytodo.ui.donelist
 
-import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mytodo.databinding.TodoitemsBinding
 import com.example.mytodo.dto.TodoModel
@@ -12,16 +12,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-/**
- * TODO
- * Adapter가 비대해서 크기 줄이기!
- *
- */
 
-class TodoListAdapter(private val todoViewModel: TodoViewModel) : RecyclerView.Adapter<TodoListAdapter.TodoViewHolder>() {
-    private var todoItems: List<TodoModel> = mutableListOf()
+class DoneListAdapter(private val todoViewModel: TodoViewModel) : ListAdapter<TodoModel, DoneListAdapter.DoneItemViewHolder>(diffUtil) {
 
-    inner class TodoViewHolder(private val todoItemBinding: TodoitemsBinding) : RecyclerView.ViewHolder(todoItemBinding.root) {
+    inner class DoneItemViewHolder(private val todoItemBinding: TodoitemsBinding) : RecyclerView.ViewHolder(todoItemBinding.root) {
         fun bind(todoModel: TodoModel) {
             with(todoItemBinding) {
                 todoTitle.text = todoModel.title
@@ -53,23 +47,28 @@ class TodoListAdapter(private val todoViewModel: TodoViewModel) : RecyclerView.A
                     }
                 }
             }
+
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
-        val todoItemBinding: TodoitemsBinding = TodoitemsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return TodoViewHolder(todoItemBinding)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DoneItemViewHolder {
+        val todoItemBinding = TodoitemsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return DoneItemViewHolder(todoItemBinding)
     }
 
-    override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
-        holder.bind(todoItems[position])
+    override fun onBindViewHolder(holder: DoneItemViewHolder, position: Int) {
+        holder.bind(currentList[position])
     }
 
-    override fun getItemCount(): Int = todoItems.size
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun update(newItem: List<TodoModel>) {
-        todoItems = newItem
-        notifyDataSetChanged()
+    companion object {
+        val diffUtil by lazy {
+            object : DiffUtil.ItemCallback<TodoModel>() {
+                override fun areItemsTheSame(oldItem: TodoModel, newItem: TodoModel): Boolean = oldItem.id == newItem.id
+                override fun areContentsTheSame(oldItem: TodoModel, newItem: TodoModel): Boolean = oldItem == newItem
+            }
+        }
     }
 }
+
+
+

@@ -26,6 +26,7 @@ class TodoViewModel(application: Application): AndroidViewModel(application) {
     private val todoRepository: TodoRepository = TodoRepository(todoDao)
 
     val readAllTodo: LiveData<List<TodoModel>> = todoRepository.readAllTodo.asLiveData()
+    val readDoneTodo: Flow<List<TodoModel>> = todoRepository.readDoneTodo
 
     fun searchTodo(todoTitle: String): LiveData<List<TodoModel>> = todoRepository.searchTodo(todoTitle).asLiveData()
 

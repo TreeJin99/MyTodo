@@ -15,10 +15,13 @@ interface TodoDao {
     @Query("SELECT * FROM TodoModel ORDER BY timestamp")
     fun readAllTodo(): Flow<List<TodoModel>>
 
+    @Query("SELECT * FROM TodoModel WHERE 'isChecked' = 1 ORDER BY timeStamp")
+    fun readDoneTodo(): Flow<List<TodoModel>>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun createTodo(todoModel: TodoModel)
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateTodo(todoModel: TodoModel)
 
     @Delete

@@ -10,6 +10,8 @@ class TodoRepository(private val todoDao: TodoDao) {
 
     val readAllTodo: Flow<List<TodoModel>> = todoDao.readAllTodo()
 
+    val readDoneTodo: Flow<List<TodoModel>> = todoDao.readDoneTodo()
+
     suspend fun createTodo(todoModel: TodoModel) = todoDao.createTodo(todoModel)
 
     suspend fun updateTodo(todoModel: TodoModel) = todoDao.updateTodo(todoModel)
