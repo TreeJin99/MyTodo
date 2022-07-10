@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.mytodo.databinding.ActivityEditBinding
 import android.app.DatePickerDialog
 import android.content.Intent
-import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.example.mytodo.dto.TodoModel
 import com.example.mytodo.ui.todolist.TodoListFragment

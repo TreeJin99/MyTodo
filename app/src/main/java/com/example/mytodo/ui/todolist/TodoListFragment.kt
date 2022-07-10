@@ -4,21 +4,25 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import com.example.mytodo.R
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.mytodo.databinding.FragmentTodoListBinding
+import com.example.mytodo.dto.TodoModel
+import com.example.mytodo.ui.TodoAdapter
 import com.example.mytodo.ui.EditActivity
 import com.example.mytodo.viewmodel.TodoViewModel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class TodoListFragment : Fragment() {
-    //private lateinit var todoBinding: FragmentTodoListBinding
     private var todoBinding: FragmentTodoListBinding? = null
-    private lateinit var todoListAdapter: TodoListAdapter
+    private lateinit var todoAdapter: TodoAdapter
 
     private val todoViewModel: TodoViewModel by lazy{
         ViewModelProvider(this)[TodoViewModel::class.java]
@@ -53,36 +57,35 @@ class TodoListFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        todoListAdapter = TodoListAdapter(todoViewModel)
-
-        todoViewModel.readAllTodo.observe(viewLifecycleOwner) {
-            todoListAdapter.update(it)
-        }
+        todoAdapter = TodoAdapter(todoViewModel)
 
         todoBinding!!.todoListRV.apply {
-            adapter = todoListAdapter
+            adapter = todoAdapter
             setHasFixedSize(true)
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch{
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+                launch {
+                    todoViewModel.readAllTodo.collect{
+                        todoAdapter.submitList(it)
+                    }
+                }
+            }
         }
     }
 
     private fun addTodo() {
         todoBinding!!.addFab.setOnClickListener {
-            //Toast.makeText(activity, "테스트", Toast.LENGTH_LONG).show()
+            Toast.makeText(activity, "테스트", Toast.LENGTH_LONG).show()
+            todoViewModel.createTodo(TodoModel("하하", "하하", false, false, "1234"))
 
             val intentToEdit = Intent(activity, EditActivity::class.java).apply {
                 putExtra("TYPE", "ADD")
             }
             startActivity(intentToEdit)
-            //startActivityForResult(intentToEdit, ACTIVITY_REQUEST_CODE)
         }
     }
-/*
-    private fun deleteTodo(todoModel: TodoModel) {
-        CoroutineScope(Dispatchers.IO).launch {
-            todoViewModel.deleteTodo(todoModel)
-        }
-    }
-*/
 
     companion object {
         const val TAG: String = "로그"

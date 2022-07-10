@@ -1,7 +1,6 @@
 package com.example.mytodo.ui.donelist
 
 import android.content.Context
-import android.content.RestrictionsManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,18 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
-import com.example.mytodo.R
 import com.example.mytodo.databinding.FragmentDoneListBinding
-import com.example.mytodo.databinding.FragmentTodoListBinding
-import com.example.mytodo.dto.TodoModel
+import com.example.mytodo.ui.TodoAdapter
 import com.example.mytodo.viewmodel.TodoViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.observeOn
 import kotlinx.coroutines.launch
 
 class DoneListFragment : Fragment() {
     private var doneBinding: FragmentDoneListBinding? = null
-    private lateinit var doneListAdapter: DoneListAdapter
+    private lateinit var todoAdapter: TodoAdapter
     private lateinit var todoViewModel: TodoViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,10 +43,11 @@ class DoneListFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        doneListAdapter = DoneListAdapter(todoViewModel)
+        Log.d("태그", "호출됨!")
+        todoAdapter = TodoAdapter(todoViewModel)
 
         doneBinding!!.doneListRV.apply {
-            adapter = doneListAdapter
+            adapter = todoAdapter
             setHasFixedSize(true)
         }
 
@@ -59,13 +55,11 @@ class DoneListFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     todoViewModel.readDoneTodo.collect {
-                        doneListAdapter.submitList(it)
+                        todoAdapter.submitList(it)
                     }
                 }
-
             }
         }
-
     }
 
     companion object {
