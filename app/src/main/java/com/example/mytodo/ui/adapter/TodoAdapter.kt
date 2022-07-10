@@ -1,6 +1,5 @@
-package com.example.mytodo.ui
+package com.example.mytodo.ui.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -32,13 +31,21 @@ class TodoAdapter(private val todoViewModel: TodoViewModel) : ListAdapter<TodoMo
         fun bind(todoModel: TodoModel) {
             binding.itemTodo = todoModel
 
-            Log.d("태그", "호출된 것: ${todoModel}")
-
             with(binding) {
+                cbTodoCheck.setOnCheckedChangeListener(null)
+                cbTodoCheck.isChecked = todoModel.isChecked
+
                 cbTodoCheck.setOnCheckedChangeListener { _, isChecked ->
-                    todoModel.isChecked = isChecked
+                    when(isChecked){
+                        true -> {
+                            todoModel.isChecked = true
+                        }
+                        else -> { // == false
+                            todoModel.isChecked = false
+                        }
+                    }
+
                     CoroutineScope(Dispatchers.IO).launch {
-                        Log.d("태그", "$todoModel  + ${todoModel.id}")
                         todoViewModel.updateTodo(todoModel)
                     }
                 }

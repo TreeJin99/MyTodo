@@ -14,10 +14,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.mytodo.databinding.FragmentTodoListBinding
 import com.example.mytodo.dto.TodoModel
-import com.example.mytodo.ui.TodoAdapter
+import com.example.mytodo.ui.adapter.TodoAdapter
 import com.example.mytodo.ui.EditActivity
 import com.example.mytodo.viewmodel.TodoViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class TodoListFragment : Fragment() {

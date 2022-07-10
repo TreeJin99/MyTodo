@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import com.example.mytodo.databinding.FragmentDoneListBinding
-import com.example.mytodo.ui.TodoAdapter
+import com.example.mytodo.ui.adapter.TodoAdapter
 import com.example.mytodo.viewmodel.TodoViewModel
 import kotlinx.coroutines.launch
 
