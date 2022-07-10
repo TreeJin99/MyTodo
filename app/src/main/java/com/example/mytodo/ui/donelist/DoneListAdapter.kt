@@ -2,6 +2,7 @@ package com.example.mytodo.ui.donelist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.BaseAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +12,6 @@ import com.example.mytodo.viewmodel.TodoViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-
 
 class DoneListAdapter(private val todoViewModel: TodoViewModel) : ListAdapter<TodoModel, DoneListAdapter.DoneItemViewHolder>(diffUtil) {
 

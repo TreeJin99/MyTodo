@@ -27,7 +27,6 @@ class EditActivity : AppCompatActivity() {
         editBinding()
         initViewModel()
         currentType()
-        addTodo()
         getEndDate()    // DatePicker 활성화
     }
 
@@ -45,14 +44,16 @@ class EditActivity : AppCompatActivity() {
         currentType = intent.getStringExtra("TYPE").toString()
         when (currentType) {
             "ADD" -> {  // 추가
-                addTodo()
+                createTodo()
+                typeClear()
             }
             "EDIT" -> { // 수정
+                updateTodo()
             }
         }
     }
 
-    private fun addTodo() {
+    private fun createTodo() {
         editBind.addTodoButton.setOnClickListener {
             val todoTitle: String = editBind.addTodoEditText.text.toString()
             val endDate: String = editBind.todoDatePicker.text.toString()
@@ -63,12 +64,25 @@ class EditActivity : AppCompatActivity() {
             CoroutineScope(Dispatchers.IO).launch {
                 todoViewModel.createTodo(todoItem)
             }
-
-            val editIntent = Intent(this, TodoListFragment::class.java).apply {
-                putExtra("TYPE", "CLEAR")
-            }
-            finish()
         }
+    }
+
+    private fun updateTodo(){
+        editBind.addTodoButton.setOnClickListener {
+            val todoTitle: String = editBind.addTodoEditText.text.toString()
+            val endDate: String = editBind.todoDatePicker.text.toString()
+            val isImportant: Boolean = editBind.importantSwitch.isChecked
+            val timeStamp: String = getCurrentTime()
+            val todoItem = TodoModel(todoTitle, endDate, isImportant, false, timeStamp)
+
+        }
+    }
+
+    private fun typeClear() {
+        val editIntent = Intent(this, TodoListFragment::class.java).apply {
+            putExtra("TYPE", "CLEAR")
+        }
+        finish()
     }
 
     private fun getEndDate() {

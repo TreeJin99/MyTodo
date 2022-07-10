@@ -19,7 +19,10 @@ class TodoListFragment : Fragment() {
     //private lateinit var todoBinding: FragmentTodoListBinding
     private var todoBinding: FragmentTodoListBinding? = null
     private lateinit var todoListAdapter: TodoListAdapter
-    private lateinit var todoViewModel: TodoViewModel
+
+    private val todoViewModel: TodoViewModel by lazy{
+        ViewModelProvider(this)[TodoViewModel::class.java]
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +36,6 @@ class TodoListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         todoBinding = FragmentTodoListBinding.inflate(inflater, container, false)
 
-        initViewModel()
         initRecyclerView()
         addTodo()
 
@@ -48,10 +50,6 @@ class TodoListFragment : Fragment() {
     override fun onDestroyView() {
         todoBinding = null
         super.onDestroyView()
-    }
-
-    private fun initViewModel() {
-        todoViewModel = ViewModelProvider(this)[TodoViewModel::class.java]
     }
 
     private fun initRecyclerView() {
